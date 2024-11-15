@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Textarea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .input{
+            display: flex;
+            justify-content: center;
+        }
+        .textarea-container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        textarea {
+            width: 350px;
+            height: 150px;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.3s ease;
+            margin-left: 40px;
+            margin-top: 60px;
+        }
+
+        textarea:focus {
+            border-color: crimson;
+        }
+
+        .btn {
+           width: 120px;
+           height: 40px;
+            font-size: 16px;
+            color: #fff;
+            background-color: crimson;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 550px;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background-color: crimson;
+        }
+    </style>
+</head>
+<body>
+    <div class="input">
+        <div class="textarea-container">
+            <textarea placeholder="Type your text here..." id="input_text"></textarea>
+        </div>
+        <div class="textarea-container">
+            <textarea placeholder="your converted text here..." id="converted_text"></textarea>
+        </div>
+        
+    </div>
+    <button class="btn" onclick="ConvertText()">Convert</button>
+
+    <div class="input">
+        <div class="textarea-container">
+            <textarea placeholder="Type your text here..." id="input_text1"></textarea>
+        </div>
+        <div class="textarea-container">
+            <textarea placeholder="your converted text here..." id="converted_text1"></textarea>
+        </div>
+        
+    </div>
+    <button class="btn" onclick="PlainText()">Convert</button>
+
+    <script>
+        function ConvertText() {
+            const text = document.getElementById('input_text').value;
+            var prime = 1000000007
+            var shift = 3; // Number of positions to shift each character
+            let encryptedText = '';
+
+            for (let i = 0; i < text.length; i++) {
+                // Get the ASCII code of each character
+                let charCode = text.charCodeAt(i);
+                let shift_random = prime%shift + shift;
+                // Shift the character code
+                let newCharCode = charCode + shift_random ;
+                // Convert the new character code back to a character and add to the result
+                encryptedText += String.fromCharCode(newCharCode);
+                shift+=2;
+            }
+
+            //const encodedText = btoa(text);
+            document.getElementById('converted_text').value =encryptedText;
+            //alert("You entered: " + text);
+        }
+
+        function PlainText() {
+            const encryptedText = document.getElementById('input_text1').value;
+            console.log(encryptedText)
+            var prime = 1000000007
+            var shift = 3; // Number of positions to shift each character
+            let decryptedText = '';
+            for (let i = 0; i < encryptedText.length; i++) {
+                let charCode = encryptedText.charCodeAt(i);
+                let shift_random = prime%shift + shift;
+                let newCharCode = charCode - shift_random;
+                decryptedText += String.fromCharCode(newCharCode);
+                shift+=2;
+            }
+
+            //const encodedText = btoa(text);
+            console.log(decryptedText)
+            document.getElementById('converted_text1').value =decryptedText;
+            //alert("You entered: " + text);
+        }
+    </script>
+</body>
+</html>
