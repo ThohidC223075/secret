@@ -89,6 +89,9 @@
     <button class="btn" onclick="PlainText()">Convert</button>
 
     <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault(); // Disables the right-click context menu
+          });
         function ConvertText() {
             const text = document.getElementById('input_text').value;
             var prime = 1000000007
