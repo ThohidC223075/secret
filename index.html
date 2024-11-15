@@ -57,6 +57,9 @@
         .btn:hover {
             background-color: crimson;
         }
+        .btn1{
+            margin-left: 190px;
+        }
     </style>
 </head>
 <body>
@@ -70,6 +73,7 @@
         
     </div>
     <button class="btn" onclick="ConvertText()">Convert</button>
+    <button class="btn btn1" onclick="copyToClipboard()">Copy</button>
 
     <div class="input">
         <div class="textarea-container">
@@ -104,6 +108,25 @@
             document.getElementById('converted_text').value =encryptedText;
             //alert("You entered: " + text);
         }
+
+
+        async function copyToClipboard() {
+            const text = document.getElementById("converted_text").value;
+
+            try {
+                // Use the Clipboard API to copy text to the clipboard
+                await navigator.clipboard.writeText(text);
+                //document.getElementById("status").innerText = "Text copied to clipboard!";
+            } catch (err) {
+                document.getElementById("status").innerText = "Failed to copy text.";
+            }
+        }
+
+
+
+
+
+
 
         function PlainText() {
             const encryptedText = document.getElementById('input_text1').value;
