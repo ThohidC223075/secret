@@ -13,17 +13,22 @@
             margin: 0;
             background-color: #f4f4f9;
         }
-        .input{
+        .input {
             display: flex;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
+            margin-top: 20px;
         }
         .textarea-container {
             width: 100%;
             max-width: 600px;
+            margin-bottom: 15px;
         }
 
         textarea {
-            width: 350px;
+            width: 100%;
+            max-width: 350px;
             height: 150px;
             padding: 15px;
             font-size: 16px;
@@ -32,8 +37,6 @@
             resize: vertical;
             outline: none;
             transition: border-color 0.3s ease;
-            margin-left: 40px;
-            margin-top: 60px;
         }
 
         textarea:focus {
@@ -41,8 +44,8 @@
         }
 
         .btn {
-           width: 120px;
-           height: 40px;
+            width: 120px;
+            height: 40px;
             font-size: 16px;
             color: #fff;
             background-color: crimson;
@@ -50,15 +53,42 @@
             border-radius: 2px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-left: 550px;
             margin-top: 15px;
         }
 
         .btn:hover {
-            background-color: crimson;
+            background-color: darkred;
         }
-        .btn1{
-            margin-left: 190px;
+        .btn1 {
+            margin-left: 20px;
+        }
+
+        /* Mobile responsive styling */
+        @media (max-width: 768px) {
+            .textarea-container {
+                width: 90%;
+            }
+
+            .btn {
+                width: 100%; /* Full width buttons on mobile */
+                margin-left: 0;
+            }
+
+            .input {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            textarea {
+                width: 100%; /* Full width textarea on mobile */
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 480px) {
+            textarea {
+                font-size: 14px; /* Smaller font size for small devices */
+            }
         }
     </style>
 </head>
@@ -68,9 +98,8 @@
             <textarea placeholder="Type your text here..." id="input_text"></textarea>
         </div>
         <div class="textarea-container">
-            <textarea placeholder="your converted text here..." id="converted_text"></textarea>
+            <textarea placeholder="Your converted text here..." id="converted_text"></textarea>
         </div>
-        
     </div>
     <button class="btn" onclick="ConvertText()">Convert</button>
     <button class="btn btn1" onclick="copyToClipboard()">Copy</button>
@@ -80,9 +109,8 @@
             <textarea placeholder="Type your text here..." id="input_text1"></textarea>
         </div>
         <div class="textarea-container">
-            <textarea placeholder="your converted text here..." id="converted_text1"></textarea>
+            <textarea placeholder="Your converted text here..." id="converted_text1"></textarea>
         </div>
-        
     </div>
     <button class="btn" onclick="PlainText()">Convert</button>
 
@@ -96,19 +124,16 @@
             for (let i = 0; i < text.length; i++) {
                 // Get the ASCII code of each character
                 let charCode = text.charCodeAt(i);
-                let shift_random = prime%shift + shift;
+                let shift_random = prime % shift + shift;
                 // Shift the character code
                 let newCharCode = charCode + shift_random ;
                 // Convert the new character code back to a character and add to the result
                 encryptedText += String.fromCharCode(newCharCode);
-                shift+=2;
+                shift += 2;
             }
 
-            //const encodedText = btoa(text);
-            document.getElementById('converted_text').value =encryptedText;
-            //alert("You entered: " + text);
+            document.getElementById('converted_text').value = encryptedText;
         }
-
 
         async function copyToClipboard() {
             const text = document.getElementById("converted_text").value;
@@ -116,36 +141,25 @@
             try {
                 // Use the Clipboard API to copy text to the clipboard
                 await navigator.clipboard.writeText(text);
-                //document.getElementById("status").innerText = "Text copied to clipboard!";
             } catch (err) {
                 document.getElementById("status").innerText = "Failed to copy text.";
             }
         }
 
-
-
-
-
-
-
         function PlainText() {
             const encryptedText = document.getElementById('input_text1').value;
-            console.log(encryptedText)
             var prime = 1000000007
             var shift = 3; // Number of positions to shift each character
             let decryptedText = '';
             for (let i = 0; i < encryptedText.length; i++) {
                 let charCode = encryptedText.charCodeAt(i);
-                let shift_random = prime%shift + shift;
+                let shift_random = prime % shift + shift;
                 let newCharCode = charCode - shift_random;
                 decryptedText += String.fromCharCode(newCharCode);
-                shift+=2;
+                shift += 2;
             }
 
-            //const encodedText = btoa(text);
-            console.log(decryptedText)
-            document.getElementById('converted_text1').value =decryptedText;
-            //alert("You entered: " + text);
+            document.getElementById('converted_text1').value = decryptedText;
         }
     </script>
 </body>
